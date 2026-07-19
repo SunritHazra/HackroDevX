@@ -159,11 +159,11 @@ Day #3
 
 1. I also fixed a major bottleneck of the project: the crazy length difference between the D+ and D- length. It was a whopping 6.5 mm+ in different and the maximum I could afford was 0.2 mm. At the time, I did not realize that it would have major drawback with the fast incoming data. Anyways, I fixed it by moving the switch a little to the right and unconnecting some nets. Then, using differential pair, I properly routed them and made sure that the difference between their length is minimal. With that ensured, I connected the things that I had moved and unrouted.
 
-2. After the lapse [HackroDevX-LPS-4-D4-1](https://lapse.hackclub.com/timelapse/-wHSsLC3JRmy), I started another lapse where I logged Day 3 full. But unfortunately, the second lapse failed and didn't compile. The time I took for the failed session was roughly a little over one hour. Like, 1 hour 6 minutes or something.
+2. After the lapse [HackroDevX-LPS-4-D4-1](https://lapse.hackclub.com/timelapse/-wHSsLC3JRmy), I started another lapse where I logged Day 3 full. But unfortunately, the second lapse failed and didn't compile. The time I took for the failed session was roughly a little over one hour. Like, 1 hour 4 minutes or something.
 
 Here're the lapses of today's session: [HackroDevX-LPS-4-D4-1](https://lapse.hackclub.com/timelapse/-wHSsLC3JRmy) and [HackroDevX-LPS-4-D4-2]()
 
-**Total time spent: 5h 10m**
+**Total time spent: 5h 15m**
 
 ---
 
