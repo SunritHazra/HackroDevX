@@ -103,19 +103,33 @@ Here're the lapses of today's session: [HackroDevX-LPS-2-D2-1](https://lapse.hac
 
 ---
 
-# Day 3 — 29.06.2026: 
+# Day 3 — 29.06.2026: Completing the Routing & Exporting PCB
 
-Today I finished off the rest of the routing, working through the remaining header pin nets and finishing power distribution out to the pins further from the main cluster, until there were zero unrouted nets left on the board. It was really exhausting and also ironically fun at the same time. The feeling: With every net, I was a step closer to 0 unconnected pins; is just undefinable.
 
-With routing done, I added the ground fill: drew a filled zone across both copper layers, set the net to GND, and used thermal reliefs for the pad connections with a minimum spoke count of 2, same as the guide walks through. Running DRC after that threw a handful of "Thermal relief connection to zone incomplete" errors on a few isolated pads, on the crystal, a couple of the header pins, and one of the load caps, exactly the kind of ground-pour headache the guide warns you about. I went into Board Setup → Design Rules → Constraints to see what my clearance and thermal relief settings actually were, and also asked Google's AI Mode how to fix a DRC clearance error, which laid out two general approaches, either physically spread the offending traces apart (with the push/shove router, manual dragging, or a full re-route) or loosen the design rule constraints if my manufacturer can handle tighter tolerances. I ended up re-filling the zones and adding a few extra vias onto the isolated ground islands to get everything properly connected to the pour.
+Today I finished off the rest of the routing, working through the remaining header pin nets and finishing power distribution out to the pins further from the main cluster, until there were zero unrouted nets left on the board. It was really exhausting and also ironically fun at the same time. The feeling: with every net, I was a step closer to `0` unconnected pins; is just undefinable.
 
-Next was silkscreen. I searched up how to batch-convert all the F.Fab layer text to silkscreen, since I had reference designators and values sitting on the fab layer that needed to move, and found that KiCad's footprint text field batch update lets you filter items by layer (set to F.Fab), tell it to apply to functional text items, and then change the target layer to F.Silkscreen in one go. After that I went through and manually cleaned things up further, deleting the less useful C#/R# labels for the tiny passives and keeping the important ones, and double-checked the bottom-side GPIO labels were mirrored and oriented properly so they'd actually read correctly from that side of the board.
+With routing done, I added the ground fill: drew a filled zone across both copper layers, set the net to `GND`, and used thermal reliefs for the pad connections with a minimum spoke count of `2`, same as the guide walks through. Running DRC after that threw a handful of `Thermal relief connection to zone incomplete` errors on a few isolated pads, on the crystal, a couple of the header pins, and one of the load caps, exactly the kind of ground-pour headache the guide warns you about. I went into `Board Setup → Design Rules → Constraints` to see what my clearance and thermal relief settings actually were, and also asked Google's `AI Mode` how to fix a DRC clearance error, which laid out two general approaches:
 
-Then it was time for a bit of art. I grabbed the Hack Club "Orpheus" flag logo from [here](https://hackclub.com/brand), ran it through KiCad's built-in Image Converter to threshold it down to black and white, and copied it to clipboard and exported it  on the F.Silkscreen layer. I placed that near the crystal along with a "HackroDevX" text label and my name, so the board has a bit of personality on it.
+- **Change the layout** — spread the offending traces apart with the push/shove router, manual dragging, or a full re-route.
+- **Loosen the design rule constraints** — if your manufacturer can handle tighter tolerances.
 
-I ran DRC one more time to make sure everything was clean, then went to File → Fabrication Outputs and exported everything (gerbers, drill files, footprint position files) with KiCad 9.0.7 into a HackroDevX_Gerber folder, keeping a HackroDevX-backups folder alongside it from earlier in the day. Following the guide, I opened the CPL (top-pos) file in Google Sheets and renamed the headers from Ref/PosX/PosY/Rot/Side to Designator/Mid X/Mid Y/Rotation/Layer, since that's what JLCPCB expects, and did the same for the BOM file, renaming Designation to Comment. I zipped the whole gerber set into a production zip and uploaded it to JLCPCB's quote page, added PCBA to the order for a batch of 5 assembled boards, and uploaded the renamed BOM and CPL files.
+I ended up re-filling the zones and adding a few extra vias onto the isolated ground islands to get everything properly connected to the pour.
 
-Going through JLCPCB's part matching, most parts auto-matched fine, the RP2040 QFN-56, the MCP1700x-330xxTT, the USB-C receptacle, the crystal, and the resistors and caps. The flash memory needed a manual nudge, JLCPCB had it in stock as the W25Q16JVUXQTR rather than the exact W25Q16JVZPIQ TR from my design, which the guide actually mentions can happen since they're functionally the same part. I made sure to leave the pin headers off the assembled parts list, since those are cheap enough and easy enough to hand-solder myself instead of paying JLCPCB's per-part assembly fee for them.
+Next was silkscreen. I searched up how to batch-convert all the `F.Fab` layer text to silkscreen, since I had reference designators and values sitting on the fab layer that needed to move, and found that KiCad's footprint text field batch update lets you filter items by layer (set to `F.Fab`), tell it to apply to functional text items, and then change the target layer to `F.Silkscreen` in one go. After that I went through and manually cleaned things up further, deleting the less useful `C#`/`R#` labels for the tiny passives and keeping the important ones, and double-checked the bottom-side GPIO labels were mirrored and oriented properly so they'd actually read correctly from that side of the board.
+
+Then it was time for a bit of art. I grabbed the Hack Club "Orpheus" flag logo from [here](https://hackclub.com/brand), ran it through KiCad's built-in Image Converter to threshold it down to black and white, and copied it to clipboard and exported it on the `F.Silkscreen` layer. I placed that near the crystal along with a `"HackroDevX"` text label and my name, so the board has a bit of personality on it.
+
+I ran DRC one more time to make sure everything was clean, then went to `File → Fabrication Outputs` and exported everything (gerbers, drill files, footprint position files) with KiCad `9.0.7` into a `HackroDevX_Gerber` folder, keeping a `HackroDevX-backups` folder alongside it from earlier in the day. Following the guide, I opened the CPL (`top-pos`) file in Google Sheets and renamed the headers:
+
+- `Ref` → `Designator`
+- `PosX` → `Mid X`
+- `PosY` → `Mid Y`
+- `Rot` → `Rotation`
+- `Side` → `Layer`
+
+since that's what JLCPCB expects, and did the same for the BOM file, renaming `Designation` to `Comment`. I zipped the whole gerber set into a production zip and uploaded it to JLCPCB's quote page, added PCBA to the order for a batch of `5` assembled boards, and uploaded the renamed BOM and CPL files.
+
+Going through JLCPCB's part matching, most parts auto-matched fine, the `RP2040` QFN-56, the `MCP1700x-330xxTT`, the USB-C receptacle, the crystal, and the resistors and caps. The flash memory needed a manual nudge, JLCPCB had it in stock as `W25Q16JVUXQTR` rather than the exact `W25Q16JVZPIQ TR` from my design, which the guide actually mentions can happen since they're functionally the same part with minor differences. I made sure to leave the pin headers off the assembled parts list, since those are cheap enough and easy enough to hand-solder myself instead of paying JLCPCB's per-part assembly fee for them.
 
 With the BOM fully matched, I've landed at the JLCPCB cart, everything uploaded and matched, but not checked out yet.
 
@@ -139,7 +153,7 @@ Day #2
 
 Day #3
 
-<img width="1366" height="733" alt="image" src="https://github.com/user-attachments/assets/5d3ec408-8313-42c0-9c6d-d2b880d204de" />
+<img width="1366" height="768" alt="image" src="https://github.com/user-attachments/assets/c8560e19-21fa-4fb1-9d32-f70ed8702798" />
 
 **There are two imporatant things to be noted:**
 
