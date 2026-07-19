@@ -163,7 +163,7 @@ Day #3
 
 Here're the lapses of today's session: [HackroDevX-LPS-4-D4-1](https://lapse.hackclub.com/timelapse/-wHSsLC3JRmy) and [HackroDevX-LPS-4-D4-2]()
 
-**Total time spent: 5h 00m**
+**Total time spent: 5h 10m**
 
 ---
 
