@@ -32,10 +32,10 @@ Here's how I did the schematic:
 - Since the RP2040 doesn't have any onboard flash, I added a W25Q128JVS quad-SPI flash IC and wired up all the QSPI pins (CLK, CS, and the four IO lines) with global labels matching the RP2040's QSPI pins, gave it a 0.1uF decoupling cap on VCC, and added a 10KΩ pull-up on the CS line plus a BOOTSEL push button in series with a 1KΩ current-limiting resistor down to GND, so the board can be dropped into BOOTSEL mode on boot.
 - Last was breaking out the I/O. TESTEN got tied straight to GND since that pin's only for factory testing, and then I labeled every remaining GPIO along with SWCLK/SWDIO with their own names. I placed two 1x20 header symbols and one 1x3 header symbol laid out to match the Pi Pico pinout, since it's a pinout people are already used to. I skipped VSYS, 3V3_EN and ADC_VREF since I'm not adding battery support, and used the freed-up pins for extra GPIOs instead, including GPIO29 for the extra ADC-capable pin, no-connecting GPIO25 in its place.
 
-* This is the power and decopuling: <img width="553" height="139" alt="image" src="https://github.com/user-attachments/assets/96dde608-219d-472a-9682-96a95f16b071" />
-* This is the USB-C and step down: <img width="564" height="333" alt="image" src="https://github.com/user-attachments/assets/9e6f4866-57e1-4350-a7fc-b4eadb88d3cd" />
-* This is the crystal ossilator: <img width="393" height="170" alt="image" src="https://github.com/user-attachments/assets/4e26f85b-4016-400b-a56b-7d17701c3016" />
-* This is the I/O pins broken out: <img width="452" height="456" alt="image" src="https://github.com/user-attachments/assets/0c8a8f67-9cef-4537-8e4d-47fdbf4ebf10" />
+* [This](https://github.com/user-attachments/assets/96dde608-219d-472a-9682-96a95f16b071) is the power and decopuling.
+* [This](https://github.com/user-attachments/assets/9e6f4866-57e1-4350-a7fc-b4eadb88d3cd) is the USB-C and step down.
+* [This](https://github.com/user-attachments/assets/4e26f85b-4016-400b-a56b-7d17701c3016) is the crystal ossilator.
+* [This](https://github.com/user-attachments/assets/0c8a8f67-9cef-4537-8e4d-47fdbf4ebf10) is the I/O pins broken out.
 
 Here's the full schematic:
 
@@ -61,7 +61,7 @@ Next came footprints. For the most part I stuck close to what the guide uses, si
 - **Decoupling capacitors and resistors:** 0402 for all the small signal caps and resistors, since anything smaller gets hard to hand-place and 0402 is plenty stable for low current.
 - **10uF bulk capacitors:** 0603, since they need a bit more room than the tiny 0402 footprint comfortably allows.
 - **USB-C receptacle:** USB_C_Receptacle_HRO_TYPE-C-31-M-12, since JLCPCB doesn't have a true basic-library USB-C part.
-- **Header pins:** PinHeader_1x20_P2.54mm_Vertical for the two side headers and PinHeader_1x03_P2.54mm_Vertical for the extra 3-pin header, all through-hole so they're strong enough to survive being plugged into repeatedly. These I'm buying separately and hand-soldering, not paying JLCPCB to assemble.
+- **Header pins:** PinHeader_1x20_P2.54mm_Vertical for the two side headers and PinHeader_1x03_P2.54mm_Vertical for the extra 3-pin header.
 - **Boot button:** SW_Push_SPST_NO_Alps_SKRK, a compact SMD footprint sitting in JLCPCB's basic library, so it doesn't add anything to the assembly cost.
 - **Crystal:** Crystal_SMD_3225-4Pin_3.2x2.5mm, also a JLCPCB basic part. I double-checked the footprint's pin 1/3 orientation against the datasheet since it's really easy to get a crystal's pinout backwards.
 - **LDO:** switched from the NCP1117-3.3_SOT223 to the smaller MCP1700x-330xxTT in a SOT-23 package. It only handles 250mA instead of the NCP1117's much larger current, but that's more than enough headroom for the devboard.
@@ -85,7 +85,13 @@ Here's the lapse of today's session: [HackroDevX-LPS-1-D1](https://lapse.hackclu
 
 Today was all about routing. I started, like the guide suggests, with the flash memory's QSPI signals, since those are simple, short, low-speed traces and a good warm-up, temporarily moving the nearby decoupling caps out of the way so I had room to work.
 
-Then came the part I was most careful with: the USB-C differential pair. I wired the two D+ pins and two D- pins on the connector together first, then held down the route track button and switched to the differential pair routing tool to run the pair down from the USB-C connector, through the 27Ω termination resistors, and into the RP2040's USB_DP/USB_DM pins, leaving a gap inside the pair for the decoupling caps to sit in later. Once that was in, I used the "Tune length of a single track" tool to check the two resistor traces matched in length, and "Tune skew of a differential pair" to nudge the shorter USB trace until both legs of the pair matched up, so data actually arrives at both pins at the same time.
+Then came the part I was most careful with: the USB-C differential pair. I routed the two D+ pins and two D- pins on the connector together first, then routed them from the USB-C connector, through the 27Ω termination resistors, and into the RP2040's USB_DP/USB_DM pins, leaving a gap inside the pair for the decoupling caps to sit in later.
+
+With the fast signals down, I went through and routed the rest of the RP2040's decoupling caps, the crystal's load caps and damping resistor, the USB-C CC pulldowns, and the button pull-up resistor, switching between the front copper layer for vertical-ish runs and the back copper layer (with vias where I needed to hop layers) for the rest, roughly following the guide's suggestion of routing front signals vertically and back signals horizontally where it made sense.
+
+Back on my own board, I spent the rest of the night wiring up the header pin nets one by one, working through the GPIO breakout methodically so I wouldn't lose track of which pins were already done, and got a good chunk of the power distribution (VBUS/GND/+3V3) routed to the main cluster of components too. I left the boot button and its associated traces for later, since like the guide says, there's no one specific spot it needs to be, so it's an easy thing to slot in wherever there's room left.
+
+By the end of the day I had roughly half the board routed, with the fast USB signals, the flash memory, the crystal, and most of the decoupling done, and the header pins and remaining power distribution still to go.
 
 Here're the lapses of today's session: [HackroDevX-LPS-2-D2-1](https://lapse.hackclub.com/timelapse/aFMjs7GqHVZj) and [HackroDevX-LPS-2-D2-2](https://lapse.hackclub.com/timelapse/7HHVShKjE44z)
 
@@ -101,10 +107,14 @@ Here's the lapse of today's session: [HackroDevX-LPS-3-D3](https://lapse.hackclu
 
 ---
 
-# Day 4 — 19.07.2026: 
+# Day 4 — 19.07.2026: Journaling & Fixing D-/D- Net Lengths
 
-Here's the lapse of today's session: 
+<img width="1366" height="733" alt="image" src="https://github.com/user-attachments/assets/7989d61f-64c6-4456-970f-f0c6312ee51e" />
 
-**Total time spent: 3h 50m**
+**Unfortunately, the second lapse failed.**
+
+Here's the lapse of today's session: [HackroDevX-LPS-4-D4](https://lapse.hackclub.com/timelapse/-wHSsLC3JRmy)
+
+**Total time spent: 4h 50m**
 
 ---
