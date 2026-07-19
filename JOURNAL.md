@@ -85,13 +85,17 @@ Here's the lapse of today's session: [HackroDevX-LPS-1-D1](https://lapse.hackclu
 
 Today was all about routing. I started, like the guide suggests, with the flash memory's QSPI signals, since those are simple, short, low-speed traces and a good warm-up, temporarily moving the nearby decoupling caps out of the way so I had room to work.
 
-Then came the part I was most careful with: the USB-C differential pair. I routed the two D+ pins and two D- pins on the connector together first, then routed them from the USB-C connector, through the 27Ω termination resistors, and into the RP2040's USB_DP/USB_DM pins, leaving a gap inside the pair for the decoupling caps to sit in later.
+Then came the part I was most careful with: the USB-C differential pair. I routed them randomly without realising the mistake I was making. I fixed my mistake on Day 4 by routing two D+ pins and two D- pins on the connector together first, then routed them from the USB-C connector, through the 27Ω termination resistors, and into the RP2040's USB_DP/USB_DM pins, leaving a gap inside the pair for the decoupling caps to sit in later.
 
-With the fast signals down, I went through and routed the rest of the RP2040's decoupling caps, the crystal's load caps and damping resistor, the USB-C CC pulldowns, and the button pull-up resistor, switching between the front copper layer for vertical-ish runs and the back copper layer (with vias where I needed to hop layers) for the rest, roughly following the guide's suggestion of routing front signals vertically and back signals horizontally where it made sense.
+I then went through and routed the rest of the RP2040's decoupling caps, the crystal's load caps and damping resistor, the USB-C CC pulldowns, and the button pull-up resistor, switching between the front copper layer for vertical-ish runs and the back copper layer (with vias where I needed to hop layers) for the rest, roughly following the guide's suggestion of routing front signals vertically and back signals horizontally where it made sense.
 
-Back on my own board, I spent the rest of the night wiring up the header pin nets one by one, working through the GPIO breakout methodically so I wouldn't lose track of which pins were already done, and got a good chunk of the power distribution (VBUS/GND/+3V3) routed to the main cluster of components too. I left the boot button and its associated traces for later, since like the guide says, there's no one specific spot it needs to be, so it's an easy thing to slot in wherever there's room left.
+Back on my own board, I spent the rest of the night wiring up the header pin nets one by one, working through the GPIO breakout, and got a good chunk of the power distribution (VBUS/GND/+3V3) routed to the main cluster of components too. I left the boot button and its associated traces for later, since like the guide says, there's no one specific spot it needs to be, so it's an easy thing to slot in wherever there's room left in the devboard.
 
 By the end of the day I had roughly half the board routed, with the fast USB signals, the flash memory, the crystal, and most of the decoupling done, and the header pins and remaining power distribution still to go.
+
+Here's a glimpse of what I had achieved by the end of the day:
+
+<img width="1365" height="708" alt="image" src="https://github.com/user-attachments/assets/65aa217f-e758-4a21-a872-f5569a3b56e7" />
 
 Here're the lapses of today's session: [HackroDevX-LPS-2-D2-1](https://lapse.hackclub.com/timelapse/aFMjs7GqHVZj) and [HackroDevX-LPS-2-D2-2](https://lapse.hackclub.com/timelapse/7HHVShKjE44z)
 
@@ -101,6 +105,20 @@ Here're the lapses of today's session: [HackroDevX-LPS-2-D2-1](https://lapse.hac
 
 # Day 3 — 29.06.2026: 
 
+Today I finished off the rest of the routing, working through the remaining header pin nets and finishing power distribution out to the pins further from the main cluster, until there were zero unrouted nets left on the board. It was really exhausting and also ironically fun at the same time. The feeling: With every net, I was a step closer to 0 unconnected pins; is just undefinable.
+
+With routing done, I added the ground fill: drew a filled zone across both copper layers, set the net to GND, and used thermal reliefs for the pad connections with a minimum spoke count of 2, same as the guide walks through. Running DRC after that threw a handful of "Thermal relief connection to zone incomplete" errors on a few isolated pads, on the crystal, a couple of the header pins, and one of the load caps, exactly the kind of ground-pour headache the guide warns you about. I went into Board Setup → Design Rules → Constraints to see what my clearance and thermal relief settings actually were, and also asked Google's AI Mode how to fix a DRC clearance error, which laid out two general approaches, either physically spread the offending traces apart (with the push/shove router, manual dragging, or a full re-route) or loosen the design rule constraints if my manufacturer can handle tighter tolerances. I ended up re-filling the zones and adding a few extra vias onto the isolated ground islands to get everything properly connected to the pour.
+
+Next was silkscreen. I searched up how to batch-convert all the F.Fab layer text to silkscreen, since I had reference designators and values sitting on the fab layer that needed to move, and found that KiCad's footprint text field batch update lets you filter items by layer (set to F.Fab), tell it to apply to functional text items, and then change the target layer to F.Silkscreen in one go. After that I went through and manually cleaned things up further, deleting the less useful C#/R# labels for the tiny passives and keeping the important ones, and double-checked the bottom-side GPIO labels were mirrored and oriented properly so they'd actually read correctly from that side of the board.
+
+Then it was time for a bit of art. I grabbed the Hack Club "Orpheus" flag logo from [here](https://hackclub.com/brand), ran it through KiCad's built-in Image Converter to threshold it down to black and white, and copied it to clipboard and exported it  on the F.Silkscreen layer. I placed that near the crystal along with a "HackroDevX" text label and my name, so the board has a bit of personality on it.
+
+I ran DRC one more time to make sure everything was clean, then went to File → Fabrication Outputs and exported everything (gerbers, drill files, footprint position files) with KiCad 9.0.7 into a HackroDevX_Gerber folder, keeping a HackroDevX-backups folder alongside it from earlier in the day. Following the guide, I opened the CPL (top-pos) file in Google Sheets and renamed the headers from Ref/PosX/PosY/Rot/Side to Designator/Mid X/Mid Y/Rotation/Layer, since that's what JLCPCB expects, and did the same for the BOM file, renaming Designation to Comment. I zipped the whole gerber set into a production zip and uploaded it to JLCPCB's quote page, added PCBA to the order for a batch of 5 assembled boards, and uploaded the renamed BOM and CPL files.
+
+Going through JLCPCB's part matching, most parts auto-matched fine, the RP2040 QFN-56, the MCP1700x-330xxTT, the USB-C receptacle, the crystal, and the resistors and caps. The flash memory needed a manual nudge, JLCPCB had it in stock as the W25Q16JVUXQTR rather than the exact W25Q16JVZPIQ TR from my design, which the guide actually mentions can happen since they're functionally the same part. I made sure to leave the pin headers off the assembled parts list, since those are cheap enough and easy enough to hand-solder myself instead of paying JLCPCB's per-part assembly fee for them.
+
+With the BOM fully matched, I've landed at the JLCPCB cart, everything uploaded and matched, but not checked out yet.
+
 Here's the lapse of today's session: [HackroDevX-LPS-3-D3](https://lapse.hackclub.com/timelapse/XPbqHUrSpcms)
 
 **Total time spent: 6h 10m**
@@ -109,12 +127,38 @@ Here's the lapse of today's session: [HackroDevX-LPS-3-D3](https://lapse.hackclu
 
 # Day 4 — 19.07.2026: Journaling & Fixing D-/D- Net Lengths
 
-<img width="1366" height="733" alt="image" src="https://github.com/user-attachments/assets/7989d61f-64c6-4456-970f-f0c6312ee51e" />
+I mostly spent my time journaling days #1, #2, #3, and #4.
 
-**Unfortunately, the second lapse failed.**
+Day #1
 
-Here's the lapse of today's session: [HackroDevX-LPS-4-D4](https://lapse.hackclub.com/timelapse/-wHSsLC3JRmy)
+<img width="1366" height="768" alt="image" src="https://github.com/user-attachments/assets/b9ea5bd4-51e1-4089-b8d9-33b83add5f64" />
 
-**Total time spent: 4h 50m**
+Day #2
+
+<img width="1366" height="768" alt="image" src="https://github.com/user-attachments/assets/ac897c66-ad11-4717-8b91-cbc877174f25" />
+
+Day #3
+
+<img width="1366" height="733" alt="image" src="https://github.com/user-attachments/assets/5d3ec408-8313-42c0-9c6d-d2b880d204de" />
+
+**There are two imporatant things to be noted:**
+
+1. I also fixed a major bottleneck of the project: the crazy length difference between the D+ and D- length. It was a whopping 6.5 mm+ in different and the maximum I could afford was 0.2 mm. At the time, I did not realize that it would have major drawback with the fast incoming data. Anyways, I fixed it by moving the switch a little to the right and unconnecting some nets. Then, using differential pair, I properly routed them and made sure that the difference between their length is minimal. With that ensured, I connected the things that I had moved and unrouted.
+
+2. After the lapse [HackroDevX-LPS-4-D4-1](https://lapse.hackclub.com/timelapse/-wHSsLC3JRmy), I started another lapse where I logged Day 3 full. But unfortunately, the second lapse failed and didn't compile. The time I took for the failed session was roughly a little over one hour. Like, 1 hour 6 minutes or something.
+
+Here're the lapses of today's session: [HackroDevX-LPS-4-D4-1](https://lapse.hackclub.com/timelapse/-wHSsLC3JRmy) and [HackroDevX-LPS-4-D4-2]()
+
+**Total time spent: 5h 00m**
+
+---
+
+# Day 5 — 20.07.2026: Completing the Repository
+
+
+
+Here's the lapse of today's session: [HackroDevX-LPS-5-D5]()
+
+**Total time spent: 0h 00m**
 
 ---
