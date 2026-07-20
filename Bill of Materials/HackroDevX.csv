@@ -1,0 +1,17 @@
+Designator,Footprint,Comment,Quantity
+"J2,J3","PinHeader_1x20_P2.54mm_Vertical","Conn_01x20",2
+"R2,R1","R_0402_1005Metric","5.1 KΩ",2
+"R7","R_0402_1005Metric","10 KΩ",1
+"C1,C4","C_0402_1005Metric","1 uF",2
+"Y1","Crystal_SMD_3225-4Pin_3.2x2.5mm","Crystal_GND24",1
+"U1","QFN-56-1EP_7x7mm_P0.4mm_EP3.2x3.2mm","RP2040",1
+"J4","PinHeader_1x03_P2.54mm_Vertical","Conn_01x03",1
+"C2,C10,C9,C7,C3,C6,C11,C12,C5,C17,C8","C_0402_1005Metric","0.1 uF",11
+"C13,C14","C_0603_1608Metric","10 uF",2
+"C15,C16","C_0402_1005Metric","33 pF",2
+"R6,R3","R_0402_1005Metric","1 KΩ",2
+"U3","Winbond_USON-8-1EP_3x2mm_P0.5mm_EP0.2x1.6mm","W25Q16JVZPIQ TR",1
+"R4,R5","R_0402_1005Metric","27 Ω",2
+"SW1","SW_Push_SPST_NO_Alps_SKRK","SW_Push",1
+"U2","SOT-23","MCP1700x-330xxTT",1
+"J1","USB_C_Receptacle_HRO_TYPE-C-31-M-12","USB_C_Receptacle_USB2.0_14P",1
