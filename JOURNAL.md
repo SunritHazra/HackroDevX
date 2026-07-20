@@ -181,8 +181,8 @@ I also added a section in the README where I wrote about how I used AI in this p
 
 With the repository fully structured and the design phase sitting at 90%, HackroDevX is officially ready to move from an ordered PCBA to a physical, assembled board — the last 10% waiting on the boards to arrive and get soldered/tested.
 
-Here's the lapse of today's session: [HackroDevX-LPS-5-D5]()
+Here's the lapse of today's session: [HackroDevX-LPS-5-D5](https://lapse.hackclub.com/timelapse/kIgZJ82Pi4lN)
 
-**Total time spent: 4h 20m**
+**Total time spent: 5h 20m**
 
 ---
