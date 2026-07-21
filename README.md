@@ -114,6 +114,14 @@ Design files: [`/PCBA`](https://github.com/SunritHazra/HackroDevX/tree/main/PCBA
 
 ## Bill of Materials (BOM)
 
+JLCPCB BOM
+
+<img width="1366" height="768" alt="image" src="https://github.com/user-attachments/assets/12cce5b1-2e7d-4bdb-bf8a-478fdbdefa81" />
+
+JLCPCB BOM Tool - BOM Matching
+
+<img width="5250" height="416" alt="image" src="https://github.com/user-attachments/assets/67cdb457-4951-4dfe-a33e-32d3680a0240" />
+
 Full sourcing sheet: [`/Bill of Materials`](https://github.com/SunritHazra/HackroDevX/tree/main/Bill%20of%20Materials)
 
 ### Electronics & PCB (SMD)
@@ -137,6 +145,10 @@ Full sourcing sheet: [`/Bill of Materials`](https://github.com/SunritHazra/Hackr
 | Component            | Vendor  |
 | --------------------- | ------- |
 | PCB Fabrication & PCBA | JLCPCB  |
+
+JLCPCB Order
+
+<img width="1366" height="768" alt="image" src="https://github.com/user-attachments/assets/39e94a04-61f3-44fb-a425-d15d3adf34f7" />
 
 --
 
