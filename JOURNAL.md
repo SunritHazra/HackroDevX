@@ -35,6 +35,7 @@ Here's how I did the schematic:
 * [This](https://github.com/user-attachments/assets/96dde608-219d-472a-9682-96a95f16b071) is the power and decopuling.
 * [This](https://github.com/user-attachments/assets/9e6f4866-57e1-4350-a7fc-b4eadb88d3cd) is the USB-C and step down.
 * [This](https://github.com/user-attachments/assets/4e26f85b-4016-400b-a56b-7d17701c3016) is the crystal ossilator.
+* [This](https://github.com/user-attachments/assets/fbd2d72e-f6a8-4ca6-835c-226b7e35d64e) is the onboard QSPI flash.
 * [This](https://github.com/user-attachments/assets/0c8a8f67-9cef-4537-8e4d-47fdbf4ebf10) is the I/O pins broken out.
 
 Here's the full schematic:
