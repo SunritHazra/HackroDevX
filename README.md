@@ -11,25 +11,41 @@ An open-source RP2040 development board with USB-C power/programming, onboard QS
 
 ---
 
+## Renders
+
+### Top View
+
+<img width="7022" height="3946" alt="image" src="https://github.com/user-attachments/assets/997912ea-3731-4e7b-9a0e-ccec70039612" />
+
+### 45° View
+
+<img width="7022" height="3574" alt="image" src="https://github.com/user-attachments/assets/493d9063-28ac-43dd-95dd-3859817c3664" />
+
+### Bottom Corner View
+
+<img width="7022" height="3946" alt="image" src="https://github.com/user-attachments/assets/bb802b93-17bc-4dbc-b5d8-e8722c020aec" />
+
+---
+
 ## Hardware Architecture
 
 ### 1. Electrical Schematic
 
-The schematic follows the five functional blocks the guide breaks a devboard into: power/decoupling, USB-C, the crystal oscillator, QSPI flash storage, and the I/O breakout, all wired around a central RP2040.
-
 Full Schematic
 
-**Power & decoupling:** One 0.1uF decoupling capacitor per RP2040 VDD pin — eight on the 3.3V IOVDD rail, two on the 1.1V DVDD rail — plus a 1uF bulk capacitor on each rail to smooth larger ripples. Power labels face up, ground labels face down, per standard schematic convention.
+<img width="3507" height="2480" alt="image" src="https://github.com/user-attachments/assets/87e17fab-7517-4859-926c-69159146e878" />
 
-**USB-C & step-down:** A USB-C receptacle with SHIELD/GND tied to ground, CC1/CC2 pulled down through 5.1KΩ resistors so the port negotiates power delivery, and the D+/D- lines routed through 27Ω termination resistors into the RP2040's USB_DP/USB_DM pins (set to bidirectional global labels). VBUS is stepped down from 5V to 3.3V using an **MCP1700x-330xxTT** LDO (swapped in from the guide's larger NCP1117-3.3_SOT223 for a smaller footprint, at the cost of a lower 250mA current limit), with 10uF bulk capacitors bracketing it.
+The schematic follows the five functional blocks the guide breaks a devboard into: power/decoupling, USB-C, the crystal oscillator, QSPI flash storage, and the I/O breakout, all wired around a central RP2040.
 
-**Crystal oscillator:** A 12MHz crystal (Y1) with two load capacitors on its I/O pins (bumped from the guide's 15pF to 33pF to match the load capacitance of the specific crystal part used), pins 2/4 tied to GND, and a 1KΩ damping resistor on XOUT to protect the crystal and keep the clock signal clean.
+**Power & decoupling:** One 0.1uF decoupling capacitor per RP2040 VDD pin — eight on the 3.3V IOVDD rail, two on the 1.1V DVDD rail — plus a 1uF bulk capacitor on each rail to smooth larger ripples. Power labels face up, ground labels face down, per standard schematic convention. [This](https://github.com/user-attachments/assets/96dde608-219d-472a-9682-96a95f16b071) is the power and decopuling.
 
-**QSPI flash:** Since the RP2040 has no onboard flash, a quad-SPI flash IC is wired up with global labels matching the RP2040's QSPI pins, a 0.1uF decoupling cap on VCC, a 10KΩ pull-up on CS, and a BOOTSEL push button in series with a 1KΩ current-limiting resistor to GND — dropping the board into BOOTSEL/mass-storage mode on boot.
+**USB-C & step-down:** A USB-C receptacle with SHIELD/GND tied to ground, CC1/CC2 pulled down through 5.1KΩ resistors so the port negotiates power delivery, and the D+/D- lines routed through 27Ω termination resistors into the RP2040's USB_DP/USB_DM pins (set to bidirectional global labels). VBUS is stepped down from 5V to 3.3V using an **MCP1700x-330xxTT** LDO (swapped in from the guide's larger NCP1117-3.3_SOT223 for a smaller footprint, at the cost of a lower 250mA current limit), with 10uF bulk capacitors bracketing it. [This](https://github.com/user-attachments/assets/9e6f4866-57e1-4350-a7fc-b4eadb88d3cd) is the USB-C and step down.
 
-**I/O breakout:** TESTEN tied to GND (factory-test-only pin), and every remaining GPIO plus SWCLK/SWDIO broken out across two 1x20 headers and one 1x3 header, laid out to match the Raspberry Pi Pico pinout. VSYS, 3V3_EN, and ADC_VREF were skipped since there's no battery support, freeing up pins for extra GPIOs — including GPIO29 (ADC-capable) in place of the unused GPIO25.
+**Crystal oscillator:** A 12MHz crystal (Y1) with two load capacitors on its I/O pins (bumped from the guide's 15pF to 33pF to match the load capacitance of the specific crystal part used), pins 2/4 tied to GND, and a 1KΩ damping resistor on XOUT to protect the crystal and keep the clock signal clean. [This](https://github.com/user-attachments/assets/4e26f85b-4016-400b-a56b-7d17701c3016) is the crystal ossilator.
 
-Running ERC initially surfaced 4 violations — three were the standard "Input Power pin not driven by any Output Power pins" warning the guide says to expect and ignore, but the fourth flagged a genuine wiring mistake where the RP2040's VREG_VOUT and the LDO's output ended up sharing a net. That was traced back to a symbol difference from the guide and fixed by re-checking the actual pin connections.
+**QSPI flash:** Since the RP2040 has no onboard flash, a quad-SPI flash IC is wired up with global labels matching the RP2040's QSPI pins, a 0.1uF decoupling cap on VCC, a 10KΩ pull-up on CS, and a BOOTSEL push button in series with a 1KΩ current-limiting resistor to GND — dropping the board into BOOTSEL/mass-storage mode on boot. [This](https://github.com/user-attachments/assets/fbd2d72e-f6a8-4ca6-835c-226b7e35d64e) is the onboard QSPI flash.
+
+**I/O breakout:** TESTEN tied to GND (factory-test-only pin), and every remaining GPIO plus SWCLK/SWDIO broken out across two 1x20 headers and one 1x3 header, laid out to match the Raspberry Pi Pico pinout. VSYS, 3V3_EN, and ADC_VREF were skipped since there's no battery support, freeing up pins for extra GPIOs — including GPIO29 (ADC-capable) in place of the unused GPIO25. [This](https://github.com/user-attachments/assets/0c8a8f67-9cef-4537-8e4d-47fdbf4ebf10) is the I/O pins broken out.
 
 ### 2. Footprints
 
@@ -44,17 +60,35 @@ Running ERC initially surfaced 4 violations — three were the standard "Input P
 - **LDO:** `MCP1700x-330xxTT` (SOT-23), swapped from the NCP1117 for size.
 - **Flash:** `W25Q16JVZPIQ TR` in the `Winbond_USON-8-1EP_3x2mm_P0.5mm_EP0.2x1.6mm` package — the same flash chip used on the real Pi Pico, swapped from the datasheet's larger W25Q128JVS.
 
-  The board outline follows the guide's Pico-shaped form factor, sized **21mm × 51.5mm** (slightly longer than the guide's reference 21×51mm outline). Components were placed by signal flow: the two 1x20 headers positioned off the board corners, the RP2040 centered and shifted slightly down, the USB-C connector near the top edge, the LDO close to VBUS, the flash memory tight against the RP2040's QSPI pins, and the crystal with its load caps and damping resistor right beside XIN/XOUT. Decoupling capacitors were grouped next to whichever pins they actually decouple.
+### 3. Printed Circuit Board Assembly
 
-Routing progress (mid-project)
+Designed for rugged reliability and high-profile ergonomics using the custom footprints above.
 
-Routing started with the flash memory's QSPI lines as a warm-up, followed by the USB-C differential pair (D+/D- routed together through the termination resistors into the RP2040), the crystal's load caps and damping resistor, and the rest of the decoupling and header nets — switching between front/back copper layers and using vias to hop layers where needed.
+KiCad PCB Window
 
-**Differential pair fix:** an early routing pass left a 6.5mm+ length mismatch between the USB D+ and D- traces against a 0.2mm tolerance budget — enough to distort the high-speed USB signal. This was fixed later by rerouting the pair properly as a matched differential pair after repositioning a nearby component.
+<img width="1366" height="733" alt="image" src="https://github.com/user-attachments/assets/7b7b040c-b52c-425d-bea4-ca3c3a2f39fd" />
 
-Once every net was routed, a ground fill was added across both copper layers on the `GND` net, using thermal reliefs (2 minimum spokes) for pad connections. DRC then flagged a handful of "Thermal relief connection to zone incomplete" errors on a few isolated pads (crystal, some header pins, a load cap), resolved by re-filling the zones and adding extra vias to tie the isolated islands into the pour.
+KiCad PCB Render
+
+<img width="1366" height="733" alt="image" src="https://github.com/user-attachments/assets/cd6ae476-6bf8-48e4-a316-adfa66708d10" />
+
+KiCad PCBA Render
+
+<img width="1366" height="733" alt="image" src="https://github.com/user-attachments/assets/8a108f63-0907-46a7-a68a-bdd436f26beb" />
+
+KiCad PCB Back Side
+
+<img width="1366" height="733" alt="image" src="https://github.com/user-attachments/assets/cd2d73f4-5732-4cf0-8977-2a22baa7af7f" />
+
+KiCad PCBA Back Side
+
+<img width="1366" height="733" alt="image" src="https://github.com/user-attachments/assets/f7d1f329-c52f-4a26-9aa8-b0bc2ce1607e" />
+
+- **Design files:** [`/PCBA`](./PCBA)
 
 ## Design Notes
+
+**Board Size:** The board outline follows the guide's Pico-shaped form factor, sized **21mm × 51.5mm** (slightly longer than the guide's reference 21×51mm outline).
 
 **Crystal load capacitance:** swapping to a different crystal part than the guide's reference meant the load capacitors had to be bumped from 15pF to 33pF to match its datasheet load capacitance.
 
