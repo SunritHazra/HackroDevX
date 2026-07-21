@@ -186,3 +186,17 @@ Here's the lapse of today's session: [HackroDevX-LPS-5-D5](https://lapse.hackclu
 **Total time spent: 5h 20m**
 
 ---
+
+# Day 5 — 20.07.2026: Adding Images & Re-confirming JLCPCB Cart
+
+Today was the final day of the engineering process of this project.
+
+Yesterday, I wrote the Readme, Journals and everything but I didn't add the images or even capture the renders needed for my project, out of my tiredness (and lazyness). Thus, today I added the images and renders, as well as completed the cart order by selecting all the components.
+
+<img width="1366" height="768" alt="image" src="https://github.com/user-attachments/assets/12cce5b1-2e7d-4bdb-bf8a-478fdbdefa81" />
+
+Here's the lapse of today's session: [HackroDevX-LPS-6-D6]()
+
+**Total time spent: 0h 00m**
+
+---
