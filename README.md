@@ -4,7 +4,7 @@ An open-source RP2040 development board with USB-C power/programming, onboard QS
 
 > Full day-by-day design log, decisions, and mistakes: [Engineering Log.md](https://github.com/SunritHazra/HackroDevX/blob/main/Engineering%20Log.md) (see also [JOURNAL.md](https://github.com/SunritHazra/HackroDevX/blob/main/JOURNAL.md) and [Fabrication Log.md](https://github.com/SunritHazra/HackroDevX/blob/main/Fabrication%20Log.md))
 
-**Project stats:** 5 build-log days · ~17h 00m total design time · 100% designing progress, 0% building progress (as of the latest journal entry — board is ordered for PCBA, not yet assembled)
+**Project stats:** 5 build-log days · ~25h 00m total design time · 100% designing progress, 0% building progress (as of the latest journal entry — board is ordered for PCBA, not yet assembled)
 
 **On the name:** Follows the author's personal naming convention for electronics projects — "Hackro" as the base word, a short form of the project's defining trait ("Dev", for devboard), and a single trailing letter — giving **HackroDevX**.
 
