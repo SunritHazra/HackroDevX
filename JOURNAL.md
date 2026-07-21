@@ -35,6 +35,7 @@ Here's how I did the schematic:
 * [This](https://github.com/user-attachments/assets/96dde608-219d-472a-9682-96a95f16b071) is the power and decopuling.
 * [This](https://github.com/user-attachments/assets/9e6f4866-57e1-4350-a7fc-b4eadb88d3cd) is the USB-C and step down.
 * [This](https://github.com/user-attachments/assets/4e26f85b-4016-400b-a56b-7d17701c3016) is the crystal ossilator.
+* [This](https://github.com/user-attachments/assets/fbd2d72e-f6a8-4ca6-835c-226b7e35d64e) is the onboard QSPI flash.
 * [This](https://github.com/user-attachments/assets/0c8a8f67-9cef-4537-8e4d-47fdbf4ebf10) is the I/O pins broken out.
 
 Here's the full schematic:
@@ -181,8 +182,26 @@ I also added a section in the README where I wrote about how I used AI in this p
 
 With the repository fully structured and the design phase sitting at 90%, HackroDevX is officially ready to move from an ordered PCBA to a physical, assembled board — the last 10% waiting on the boards to arrive and get soldered/tested.
 
-Here's the lapse of today's session: [HackroDevX-LPS-5-D5]()
+Here's the lapse of today's session: [HackroDevX-LPS-5-D5](https://lapse.hackclub.com/timelapse/kIgZJ82Pi4lN)
 
-**Total time spent: 4h 20m**
+**Total time spent: 5h 20m**
+
+---
+
+# Day 5 — 20.07.2026: Adding Images & Re-confirming JLCPCB Cart
+
+Today was the final day of the engineering process of this project.
+
+Yesterday, I wrote the Readme, Journals and everything but I didn't add the images or even capture the renders needed for my project, out of my tiredness (and lazyness). Thus, today I added the images and renders, as well as completed the cart order by selecting all the components.
+
+<img width="1366" height="768" alt="image" src="https://github.com/user-attachments/assets/12cce5b1-2e7d-4bdb-bf8a-478fdbdefa81" />
+
+This is the screenshot of the order pending for payment, with a cost breakdown.
+
+<img width="1366" height="768" alt="image" src="https://github.com/user-attachments/assets/39e94a04-61f3-44fb-a425-d15d3adf34f7" />
+
+Here's the lapse of today's session: [HackroDevX-LPS-6-D6]()
+
+**Total time spent: 0h 00m**
 
 ---
