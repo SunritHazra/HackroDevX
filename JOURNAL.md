@@ -223,6 +223,6 @@ Here's a screenshot of the repository itself:
 
 Here's the lapse of today's session: [HackroDevX-LPS-6-D6]()
 
-**Total time spent: 0h 00m**
+**Total time spent: 2h 40m**
 
 ---
