@@ -116,6 +116,10 @@ With routing done, I added the ground fill: drew a filled zone across both coppe
 
 I ended up re-filling the zones and adding a few extra vias onto the isolated ground islands to get everything properly connected to the pour.
 
+Here's how the board looks after adding copper pours:
+
+<img width="1071" height="565" alt="image" src="https://github.com/user-attachments/assets/e49d24fc-a74b-4af0-88eb-7eeb224b3ac1" />
+
 Next was silkscreen. I searched up how to batch-convert all the `F.Fab` layer text to silkscreen, since I had reference designators and values sitting on the fab layer that needed to move, and found that KiCad's footprint text field batch update lets you filter items by layer (set to `F.Fab`), tell it to apply to functional text items, and then change the target layer to `F.Silkscreen` in one go. After that I went through and manually cleaned things up further, deleting the less useful `C#`/`R#` labels for the tiny passives and keeping the important ones, and double-checked the bottom-side GPIO labels were mirrored and oriented properly so they'd actually read correctly from that side of the board.
 
 Then it was time for a bit of art. I grabbed the Hack Club "Orpheus" flag logo from [here](https://hackclub.com/brand), ran it through KiCad's built-in Image Converter to threshold it down to black and white, and copied it to clipboard and exported it on the `F.Silkscreen` layer. I placed that near the crystal along with a `"HackroDevX"` text label and my name, so the board has a bit of personality on it.
@@ -128,9 +132,13 @@ I ran DRC one more time to make sure everything was clean, then went to `File �
 - `Rot` → `Rotation`
 - `Side` → `Layer`
 
-since that's what JLCPCB expects, and did the same for the BOM file, renaming `Designation` to `Comment`. I zipped the whole gerber set into a production zip and uploaded it to JLCPCB's quote page, added PCBA to the order for a batch of `5` assembled boards, and uploaded the renamed BOM and CPL files.
+Since that's what JLCPCB expects, and did the same for the BOM file, renaming `Designation` to `Comment`. I zipped the whole gerber set into a production zip and uploaded it to JLCPCB's quote page, added PCBA to the order for a batch of `5` assembled boards, and uploaded the renamed BOM and CPL files.
 
 Going through JLCPCB's part matching, most parts auto-matched fine, the `RP2040` QFN-56, the `MCP1700x-330xxTT`, the USB-C receptacle, the crystal, and the resistors and caps. The flash memory needed a manual nudge, JLCPCB had it in stock as `W25Q16JVUXQTR` rather than the exact `W25Q16JVZPIQ TR` from my design, which the guide actually mentions can happen since they're functionally the same part with minor differences. I made sure to leave the pin headers off the assembled parts list, since those are cheap enough and easy enough to hand-solder myself instead of paying JLCPCB's per-part assembly fee for them.
+
+Here's the JLCPCB BOM:
+
+<img width="1365" height="716" alt="image" src="https://github.com/user-attachments/assets/34233ccb-d0f1-4d61-ad46-fea5ace3d05d" />
 
 With the BOM fully matched, I've landed at the JLCPCB cart, everything uploaded and matched, but not checked out yet.
 
