@@ -168,7 +168,7 @@ Here're the lapses of today's session: [HackroDevX-LPS-4-D4-1](https://lapse.hac
 
 ---
 
-# Day 5 — 20.07.2026: Completing the Repository
+# Day 5 — 20.07.2026: Working on the Repository
 
 Today was all about compiling the fruits of the last few days of work and making the project public-ready. I focused entirely on documentation, visual assets, and setting up the GitHub repository.
 
@@ -180,7 +180,14 @@ Repository Setup & Licensing: Organized the local KiCad project files into the r
 
 I also added a section in the README where I wrote about how I used AI in this project, in the section "AI as a Research & Documentation Aid".
 
-With the repository fully structured and the design phase sitting at 90%, HackroDevX is officially ready to move from an ordered PCBA to a physical, assembled board — the last 10% waiting on the boards to arrive and get soldered/tested.
+Here's how far I have worked on the repository:
+
+<img width="1365" height="719" alt="image" src="https://github.com/user-attachments/assets/6c304f0e-0d2a-4774-aa6c-c43ff788068c" />
+
+With this, the only things left incomplte are as follows:
+
+- Adding images and renders.
+- Completeing the Order by choosing components.
 
 Here's the lapse of today's session: [HackroDevX-LPS-5-D5](https://lapse.hackclub.com/timelapse/kIgZJ82Pi4lN)
 
@@ -188,7 +195,7 @@ Here's the lapse of today's session: [HackroDevX-LPS-5-D5](https://lapse.hackclu
 
 ---
 
-# Day 5 — 20.07.2026: Adding Images & Re-confirming JLCPCB Cart
+# Day 6 — 21.07.2026: Adding Images & Re-confirming JLCPCB Cart
 
 Today was the final day of the engineering process of this project.
 
@@ -199,6 +206,12 @@ Yesterday, I wrote the Readme, Journals and everything but I didn't add the imag
 This is the screenshot of the order pending for payment, with a cost breakdown.
 
 <img width="1366" height="768" alt="image" src="https://github.com/user-attachments/assets/39e94a04-61f3-44fb-a425-d15d3adf34f7" />
+
+With the repository fully structured and the design phase sitting at 90%, HackroDevX is officially ready to move from an ordered PCBA to a physical, assembled board — the last 10% waiting on the boards to arrive and get soldered/tested.
+
+Here's a screenshot of the repository itself:
+
+<img width="1366" height="768" alt="image" src="https://github.com/user-attachments/assets/d92322a7-df56-4e54-bfd9-afdfd7a26506" />
 
 Here's the lapse of today's session: [HackroDevX-LPS-6-D6]()
 
