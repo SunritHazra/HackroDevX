@@ -196,6 +196,10 @@ Yesterday, I wrote the Readme, Journals and everything but I didn't add the imag
 
 <img width="1366" height="768" alt="image" src="https://github.com/user-attachments/assets/12cce5b1-2e7d-4bdb-bf8a-478fdbdefa81" />
 
+This is the screenshot of the order pending for payment, with a cost breakdown.
+
+<img width="1366" height="768" alt="image" src="https://github.com/user-attachments/assets/39e94a04-61f3-44fb-a425-d15d3adf34f7" />
+
 Here's the lapse of today's session: [HackroDevX-LPS-6-D6]()
 
 **Total time spent: 0h 00m**
